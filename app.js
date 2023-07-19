@@ -7,8 +7,10 @@ const userRouter = require("./routes/userRoutes");
 const app = express();
 
 // 1. MIDDLEWARES
-
-app.use(morgon("dev"));
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV.trim() === "development") {
+  app.use(morgon("dev"));
+}
 
 //adds body data on req - data from the body is added to req object
 app.use(express.json());
