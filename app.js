@@ -6,11 +6,22 @@ const app = express();
 //adds body data on req - data from the body is added to req object
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log("hello from middleware 👋");
+  next();
+});
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
 const getAllTours = (req, res) => {
+  console.log(req.requestTime);
   res.status(200).json({
     status: "success",
     results: tours.length,
