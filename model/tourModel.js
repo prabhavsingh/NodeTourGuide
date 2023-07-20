@@ -7,7 +7,6 @@ const tourSchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
-  slug: String,
   duration: {
     type: Number,
     required: [true, 'Atour must have a duration'],
