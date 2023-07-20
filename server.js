@@ -22,7 +22,7 @@ const tourSchema = new mongoose.Schema({
     unique: true,
   },
   rating: {
-    typr: Number,
+    type: Number,
     default: 4.5,
   },
   price: {
@@ -31,7 +31,22 @@ const tourSchema = new mongoose.Schema({
   },
 });
 
-const Tour = mongoose.Model('Tour', tourSchema);
+const Tour = mongoose.model('Tour', tourSchema);
+
+const testTour = new Tour({
+  name: 'The Forest Hiker',
+  rating: 4.7,
+  price: 497,
+});
+
+testTour
+  .save()
+  .then((doc) => {
+    console.log(doc);
+  })
+  .catch((err) => {
+    console.log('ERROR💥:', err);
+  });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
