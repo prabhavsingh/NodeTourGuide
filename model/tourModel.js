@@ -90,9 +90,16 @@ tourSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
 });
-tourSchema.post(/^find/, function (doc, next) {
-  console.log(`Query tool ${Date.now() - this.start} ms`);
-  console.log(doc);
+// tourSchema.post(/^find/, function (doc, next) {
+//   console.log(`Query tool ${Date.now() - this.start} ms`);
+//   console.log(doc);
+//   next();
+// });
+
+//AGGREGATION MIDDLEWARE
+tourSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  console.log(this);
   next();
 });
 
