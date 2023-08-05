@@ -1,6 +1,7 @@
 const express = require('express');
 const morgon = require('morgan');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet')
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -10,11 +11,14 @@ const globalErrorHandler = require('./controllers/errorController');
 const app = express();
 
 // 1. MIDDLEWARES
+app.use(helmet());
+
 console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV.trim() === 'development') {
   app.use(morgon('dev'));
 }
 
+//limit request from same API
 const limiter = rateLimit({
   max: 100,
   windowMS: 60 * 60 * 1000,
@@ -22,8 +26,11 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
+
 //adds body data on req - data from the body is added to req object
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
+
+//serving static files
 app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
