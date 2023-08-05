@@ -1,5 +1,6 @@
 const express = require('express');
 const morgon = require('morgan');
+const rateLimit = require('express-rate-limit');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -13,6 +14,13 @@ console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV.trim() === 'development') {
   app.use(morgon('dev'));
 }
+
+const limiter = rateLimit({
+  max: 100,
+  windowMS: 60 * 60 * 1000,
+  message: 'Too many request from this IP, please try again in hour!'
+});
+app.use('/api', limiter);
 
 //adds body data on req - data from the body is added to req object
 app.use(express.json());
