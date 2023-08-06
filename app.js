@@ -8,6 +8,7 @@ const hpp = require('hpp');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -25,10 +26,9 @@ if (process.env.NODE_ENV.trim() === 'development') {
 const limiter = rateLimit({
   max: 100,
   windowMS: 60 * 60 * 1000,
-  message: 'Too many request from this IP, please try again in hour!'
+  message: 'Too many request from this IP, please try again in hour!',
 });
 app.use('/api', limiter);
-
 
 //adds body data on req - data from the body is added to req object
 app.use(express.json({ limit: '10kb' }));
@@ -40,16 +40,18 @@ app.use(mongoSanitize());
 app.use(xss());
 
 //prevent parameter pollution
-app.use(hpp({
-  whitelist: [
-    'duration',
-    'ratingsQuantity',
-    'ratingsAverage',
-    'maxGroupSixe',
-    'difficulty',
-    'price',
-  ]
-}))
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSixe',
+      'difficulty',
+      'price',
+    ],
+  }),
+);
 
 //serving static files
 app.use(express.static(`${__dirname}/public`));
@@ -72,6 +74,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 app.all('*', (req, res, next) => {
   // res.status(404).json({
