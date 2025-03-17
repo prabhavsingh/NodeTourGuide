@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgon = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -14,7 +15,14 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 // 1. MIDDLEWARES
+//serving static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+//Set security HTTP headers
 app.use(helmet());
 
 console.log(process.env.NODE_ENV);
@@ -53,9 +61,6 @@ app.use(
   }),
 );
 
-//serving static files
-app.use(express.static(`${__dirname}/public`));
-
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   // console.log(req.headers);
@@ -71,6 +76,9 @@ app.use((req, res, next) => {
 // app.delete("/api/v1/tours/:id", deleteTour);
 
 // 3. ROUTES
+app.get('/', (req, res) => {
+  res.status(200).render('base');
+});
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
