@@ -11,21 +11,16 @@ router.post('/login', authController.login);
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.patch(
-  '/updateMyPassword',
-  authController.protect,
-  authController.updatepassword,
-);
+//Protect all routes after this middleware
+router.use(authController.protect);
 
-router.get(
-  '/me',
-  authController.protect,
-  userController.getMe,
-  userController.getUser,
-);
-router.patch('/updateMe', authController.protect, userController.updateMe);
-router.patch('/deleteMe', authController.protect, userController.deleteMe);
+router.patch('/updateMyPassword', authController.updatepassword);
 
+router.get('/me', userController.getMe, userController.getUser);
+router.patch('/updateMe', userController.updateMe);
+router.patch('/deleteMe', userController.deleteMe);
+
+router.use(authController.restrictTo('admin'));
 router
   .route('/')
   .get(userController.getAllUsers)
