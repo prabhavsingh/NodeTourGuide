@@ -31,7 +31,7 @@ router
   );
 
 router
-  .route(':tourId/reviews')
+  .route('/:tourId/reviews')
   .post(
     authController.protect,
     authController.restrictTo('user'),
