@@ -31,3 +31,9 @@ exports.getLoginForm = (req, res) => {
     titile: 'Log into your account',
   });
 };
+
+exports.getAccount = (req, res) => {
+  res.status(200).render('account', {
+    titile: 'Your Account',
+  });
+};
