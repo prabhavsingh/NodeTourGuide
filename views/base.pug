@@ -6,15 +6,15 @@ html
         link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700' rel='stylesheet')
         link(rel='stylesheet' href='/css/style.css')
         link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
-        title NodeTourGuide | Exciting tours for adventurous people
+        title NodeTourGuide | #{title}
 
     body 
         // HEADER
         include _header
 
         // CONTENT
-        main.main 
-            h1= tour 
+        block content 
+            h1 this is a placeholder heading
 
         // FOOTER
         include _footer
