@@ -1,6 +1,14 @@
 {
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
+  "overrides": [
+    {
+      "files": ["public/js/**/*.js"],
+      "parserOptions": {
+        "sourceType": "module"
+      }
+    }
+  ],
   "rules": {
     "prettier/prettier": 0,
     "arrow-body-style": "off",

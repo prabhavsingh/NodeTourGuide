@@ -44,8 +44,8 @@ const userSchema = mongoose.Schema({
   actuve: {
     type: Boolean,
     default: true,
-    select: false
-  }
+    select: false,
+  },
 });
 
 userSchema.pre('save', async function (next) {
@@ -69,8 +69,8 @@ userSchema.pre('save', function (next) {
 userSchema.pre(/^find/, function (next) {
   //this pints to current query
   this.find({ active: { $ne: false } });
-  next()
-})
+  next();
+});
 
 userSchema.methods.correctPassword = async function (
   candidatePassword,
