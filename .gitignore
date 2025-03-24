@@ -2,4 +2,3 @@ node_modules/
 *.env
 dev-data/
 .cache
-public/dist/
