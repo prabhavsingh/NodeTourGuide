@@ -1,7 +1,5 @@
 /*eslint-disable*/
 
-import 'core-js/stable';
-import 'regenerator-runtime';
 import axios from 'axios';
 
 import { showAlert } from './alerts';
@@ -16,7 +14,6 @@ export const login = async (email, password) => {
         password,
       },
     });
-    console.log('first', res);
     if (res.data.status === 'success') {
       showAlert('success', 'Logged in successfully');
       window.setTimeout(() => {
