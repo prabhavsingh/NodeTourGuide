@@ -30,7 +30,7 @@ exports.uploadTourImages = upload.fields([
 // upload.array('images', 5);
 
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  console.log(req.files);
+  // console.log(req.files);
   if (!req.files.imageCover || !req.files.images) return next();
 
   //Cover image
@@ -164,7 +164,7 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
     startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
   });
 
-  console.log(distance, lat, lng, unit);
+  // console.log(distance, lat, lng, unit);
   res.status(200).json({
     status: 'success',
     results: tours.length,
