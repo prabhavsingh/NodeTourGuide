@@ -8,21 +8,28 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const bookingController = require('./controllers/bookingController');
 const bookingRouter = require('./routes/bookingRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
+app.enable('trust proxy');
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1. MIDDLEWARES
+//implement cors
+app.use(cors());
+app.options('*', cors());
 //serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -51,6 +58,12 @@ const limiter = rateLimit({
   message: 'Too many request from this IP, please try again in hour!',
 });
 app.use('/api', limiter);
+
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout,
+);
 
 //adds body data on req - data from the body is added to req object
 app.use(express.json({ limit: '10kb' }));
