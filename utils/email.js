@@ -53,4 +53,12 @@ module.exports = class Email {
     //send the actual email
     await this.send('welcome', 'Welcome to TravelNest Family');
   }
+
+  async sendPasswordReset() {
+    //send the actual email
+    await this.send(
+      'passwordReset',
+      'Ypur password reset token (valid for only 10 minutes)',
+    );
+  }
 };
