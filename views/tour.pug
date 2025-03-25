@@ -1,6 +1,11 @@
 extends base
 include _reviewCard
 
+block append head 
+    script(src='https://cdn.maptiler.com/maptiler-sdk-js/v3.0.1/maptiler-sdk.umd.min.js')
+    link(href='https://cdn.maptiler.com/maptiler-sdk-js/v3.0.1/maptiler-sdk.css' rel='stylesheet')
+
+
 mixin overviewBox(label,text,icon)
     .overview-box__detail
         svg.overview-box__icon

@@ -6,7 +6,9 @@ import 'regenerator-runtime';
 import { forgotPassword, login, logout, resetPassword, signup } from './login';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe.js';
+import { displayMap } from './map.js';
 
+const mapTiler = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
@@ -16,6 +18,10 @@ const signupForm = document.querySelector('.form--signup');
 const forgotPasswordForm = document.querySelector('.form--forgot--password');
 const resetPasswordForm = document.querySelector('.form--reset--password');
 
+if (mapTiler) {
+  const locations = JSON.parse(mapTiler.dataset.locations);
+  displayMap(locations);
+}
 if (loginForm)
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
