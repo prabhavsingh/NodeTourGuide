@@ -30,18 +30,32 @@ exports.getTour = catchAsync(async (req, res, next) => {
 
 exports.getLoginForm = (req, res) => {
   res.status(200).render('login', {
-    titile: 'Log into your account',
+    title: 'Log into your account',
   });
 };
+
 exports.getSignupForm = (req, res) => {
   res.status(200).render('signup', {
-    titile: 'Sign up your account',
+    title: 'Sign up your account',
+  });
+};
+
+exports.getForgotPasswordForm = (req, res) => {
+  res.status(200).render('forgotPassword', {
+    title: 'Reset Your Password',
+  });
+};
+
+exports.getResetPasswordForm = (req, res) => {
+  res.status(200).render('resetPassword', {
+    title: 'Reset Your Password',
+    resetToken: req.params.resetToken,
   });
 };
 
 exports.getAccount = (req, res) => {
   res.status(200).render('account', {
-    titile: 'Your Account',
+    title: 'Your Account',
   });
 };
 

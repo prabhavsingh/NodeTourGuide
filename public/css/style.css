@@ -1353,7 +1353,22 @@ body {
   margin-bottom: 0.75rem;
 }
 
+.btn--reset:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .form__photo-upload {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.form__forgot-password {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

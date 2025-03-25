@@ -3,7 +3,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime';
 
-import { login, logout, signup } from './login';
+import { forgotPassword, login, logout, resetPassword, signup } from './login';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe.js';
 
@@ -13,6 +13,8 @@ const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
 const signupForm = document.querySelector('.form--signup');
+const forgotPasswordForm = document.querySelector('.form--forgot--password');
+const resetPasswordForm = document.querySelector('.form--reset--password');
 
 if (loginForm)
   loginForm.addEventListener('submit', (e) => {
@@ -23,6 +25,50 @@ if (loginForm)
   });
 
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
+
+if (forgotPasswordForm)
+  forgotPasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const resetBtn = document.querySelector('.btn--reset');
+    resetBtn.disabled = true;
+    resetBtn.textContent = 'Processing...';
+    const email = document.getElementById('email').value;
+    try {
+      await forgotPassword(email);
+      let time = 60;
+      const countdown = setInterval(() => {
+        time--;
+        document.querySelector(
+          '.btn--reset',
+        ).textContent = `Try Again in ${time} sec`;
+        if (time === 0) {
+          clearInterval(countdown);
+          resetBtn.disabled = false;
+          resetBtn.textContent = `Reset Password`;
+        }
+      }, 1000);
+    } catch (error) {
+      resetBtn.disabled = false;
+      resetBtn.textContent = `Reset Password`;
+    }
+  });
+
+if (resetPasswordForm)
+  resetPasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const resetBtn = document.querySelector('.btn--reset');
+    resetBtn.textContent = 'Updating...';
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+    const resetToken = resetBtn.dataset.resetToken;
+    try {
+      await resetPassword(password, passwordConfirm, resetToken);
+      resetBtn.textContent = `Done`;
+    } catch (error) {
+      resetBtn.disabled = false;
+      resetBtn.textContent = 'Save Password';
+    }
+  });
 
 if (signupForm)
   signupForm.addEventListener('submit', (e) => {
