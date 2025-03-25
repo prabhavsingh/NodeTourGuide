@@ -1,5 +1,5 @@
 {
-  "name": "nodetourguide",
+  "name": "travelnest",
   "version": "1.0.0",
   "description": "Learning node, express and mongoDB",
   "main": "app.js",
@@ -39,6 +39,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.2",
     "nodemailer": "^6.9.4",
+    "parcel-bundler": "^1.12.5",
     "pug": "^3.0.3",
     "regenerator-runtime": "^0.14.1",
     "sharp": "^0.33.5",
@@ -57,7 +58,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.32.2",
     "nodemon": "^3.0.1",
-    "parcel-bundler": "^1.12.5",
     "prettier": "^3.0.0"
   },
   "engines": {
